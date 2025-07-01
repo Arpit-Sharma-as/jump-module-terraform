@@ -1,0 +1,53 @@
+project_id = ""
+region     = ""
+
+gke_options = {
+  cluster_name            = "private-gke-cluster"
+  enable_private_nodes    = true
+  enable_private_endpoint = true
+  master_ipv4_cidr_block  = ""
+}
+
+network_options = {
+  vpc_name      = "my-private-vpc"
+  subnet_name   = ""
+  subnet_cidr   = ""
+  pods_cidr     = ""
+  services_cidr = ""
+}
+
+# jumpbox_options = {
+#   jumpbox_name           = "jumpbox-vm"
+#   jumpbox_machine_type   = "e2-small"
+#   jumpbox_image          = "projects/debian-cloud/global/images/family/debian-12"
+#   jumpbox_startup_script = <<-EOT
+#     #!/bin/bash
+#     sudo apt-get update
+#     sudo apt-get install -yq git
+#   EOT
+#   jumpbox_tags = ["jumpbox"]
+# }
+
+firewall_options = {
+  firewall_name          = "allow-ssh-jumpbox"
+  firewall_ports         = ["22"]
+  firewall_source_ranges = [""]
+  firewall_target_tags   = ["jumpbox"]
+}
+
+service_account_roles = [
+  "roles/logging.logWriter",
+  "roles/monitoring.metricWriter",
+  "roles/monitoring.viewer",
+  "roles/compute.osLogin",
+  "roles/compute.admin",
+  "roles/iam.serviceAccountUser",
+  "roles/container.admin",
+  "roles/container.clusterAdmin",
+  "roles/compute.osAdminLogin"
+]
+
+
+vpn_shared_secret = "your-shared-secret"
+local_gateway_ip  = ""
+local_cidr_range  = ""
